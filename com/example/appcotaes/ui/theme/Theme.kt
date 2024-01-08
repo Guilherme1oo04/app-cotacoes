@@ -12,9 +12,10 @@ import androidx.core.view.WindowCompat
 
 private val ColorScheme = darkColorScheme(
         primary = Blue,
+        onPrimary = onBlue,
         secondary = LightGreen,
         tertiary = GiantOrange,
-        background = FrenchGray,
+        background = WhiteBlue,
         error = Red,
 )
 
