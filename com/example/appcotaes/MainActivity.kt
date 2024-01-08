@@ -17,9 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppCotaçõesTheme {
-                Surface(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                    Screen(internetDevice = InternetDevice(LocalContext.current))
-                }
+                Screen(internetDevice = InternetDevice(LocalContext.current))
             }
         }
     }
