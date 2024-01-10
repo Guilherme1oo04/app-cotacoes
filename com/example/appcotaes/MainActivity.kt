@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.appcotaes.ui.interfaces.Screen
 import com.example.appcotaes.ui.theme.AppCotaçõesTheme
 import com.example.appcotaes.utils.InternetDevice
+import com.example.appcotaes.utils.StateCoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
                 Screen(internetDevice = InternetDevice(LocalContext.current))
             }
         }
+
     }
 }
 
