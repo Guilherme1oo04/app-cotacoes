@@ -6,25 +6,25 @@ const val COTACOES_URL = "https://economia.awesomeapi.com.br/daily/"
 
 data class ApiResponseModel(
     @SerializedName("code")
-    var code: String,
+    val code: String,
     @SerializedName("codein")
-    var codein: String,
+    val codein: String,
     @SerializedName("name")
-    var name: String,
+    val name: String,
     @SerializedName("high")
-    var high: String,
+    val high: String,
     @SerializedName("low")
-    var low: String,
+    val low: String,
     @SerializedName("varBid")
-    var varBid: String,
+    val varBid: String,
     @SerializedName("pctChange")
-    var pctChange: String,
+    val pctChange: String,
     @SerializedName("bid")
-    var bid: String,
+    val bid: String,
     @SerializedName("ask")
-    var ask: String,
+    val ask: String,
     @SerializedName("timestamp")
-    var timestamp: String,
+    val timestamp: String,
     @SerializedName("create_data")
-    var create_data: String
+    val create_data: String
 )
