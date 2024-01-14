@@ -18,7 +18,7 @@ fun Screen(internetDevice: InternetDevice) {
     }
 
     if (result) {
-        Text(text = "Deu certo!")
+        App()
     } else {
         InternetErrorMessage() {
             result = internetDevice.internetAvailability()
