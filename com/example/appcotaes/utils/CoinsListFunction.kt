@@ -22,7 +22,7 @@ fun coinsList(): List<Map<String, String>> {
     val xmlInput = ByteArrayInputStream(response.toString().trimIndent().toByteArray(Charsets.UTF_8))
     val doc = dBuilder.parse(xmlInput)
 
-    val listaMoedas: List<Map<String, String>> = mutableListOf()
+    val listaMoedas: MutableList<Map<String, String>> = mutableListOf()
 
     val element = doc.documentElement
     val nodeList = element.childNodes
@@ -33,7 +33,7 @@ fun coinsList(): List<Map<String, String>> {
             val elem = node as Element
             val sigla = elem.tagName
             val nome = elem.textContent
-            (listaMoedas as MutableList<Map<String, String>>).add(
+            listaMoedas.add(
                 mapOf(
                     "nome" to nome,
                     "sigla" to sigla
