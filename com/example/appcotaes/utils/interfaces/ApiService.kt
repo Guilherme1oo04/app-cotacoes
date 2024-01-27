@@ -1,6 +1,6 @@
 package com.example.appcotaes.utils.interfaces
 
-import com.example.appcotaes.utils.ApiResponseModel
+import com.example.appcotaes.data.ApiResponseModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
