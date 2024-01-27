@@ -1,5 +1,6 @@
 package com.example.appcotaes.utils
 
+import com.example.appcotaes.data.ApiResponseModel
 import com.example.appcotaes.utils.interfaces.ApiService
 import retrofit2.Call
 import retrofit2.Callback

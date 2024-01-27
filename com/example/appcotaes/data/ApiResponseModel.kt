@@ -1,4 +1,4 @@
-package com.example.appcotaes.utils
+package com.example.appcotaes.data
 
 import com.google.gson.annotations.SerializedName
 
