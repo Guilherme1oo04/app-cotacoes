@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -44,53 +45,56 @@ fun App(coinsList: List<CoinModel>) {
         mutableStateOf(false)
     }
 
-    Box {
+    Box(
+        modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
+    ) {
         Column(modifier = Modifier
-            .clickable(interactionSource = MutableInteractionSource(), indication = null) {
-                if (expandedPopupMoeda1) {
-                    expandedPopupMoeda1 = false
-                }
-                if (expandedPopupMoeda2) {
-                    expandedPopupMoeda2 = false
-                }
-            }
             .fillMaxHeight()) {
 
-            Text(
-                text = "Espia Câmbio",
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
-                style = TextStyle(
-                    shadow = Shadow(
-                        color = Color.Black,
-                        offset = Offset(1.5f, 1.5f),
-                        blurRadius = 0f
+                    .height(170.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(bottomStart = 35.dp, bottomEnd = 35.dp)
                     )
-                )
-            )
-
-            Row(
-                modifier = Modifier
-                    .padding(13.dp)
             ) {
                 Text(
+                    text = "Espia Câmbio",
                     modifier = Modifier
-                        .clickable{
-                            expandedPopupMoeda1 = !expandedPopupMoeda1
-                        }
-                        .padding(5.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.background,
-                            shape = RoundedCornerShape(10.dp)
-                        ),
-                    text = moeda1Selecionada.sigla,
-                    fontSize = 22.sp,
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    style = TextStyle(
+                        shadow = Shadow(
+                            color = Color.Black,
+                            offset = Offset(1.5f, 1.5f),
+                            blurRadius = 0f
+                        )
+                    )
                 )
+
+                Row(
+                    modifier = Modifier
+                        .padding(13.dp)
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .clickable{
+                                expandedPopupMoeda1 = !expandedPopupMoeda1
+                            }
+                            .padding(5.dp)
+                            .background(
+                                color = MaterialTheme.colorScheme.background,
+                                shape = RoundedCornerShape(10.dp)
+                            ),
+                        text = moeda1Selecionada.sigla,
+                        fontSize = 22.sp,
+                    )
+                }
             }
         }
 
@@ -98,6 +102,7 @@ fun App(coinsList: List<CoinModel>) {
         CoinSelectionList(
             coinsList = coinsList,
             showDialog = expandedPopupMoeda1,
+            moedaSelecionada = moeda1Selecionada,
             labelFunction = {moeda ->
                 moeda1Selecionada = moeda
             },
