@@ -1,12 +1,15 @@
 package com.example.appcotaes.ui.interfaces
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,33 +33,37 @@ fun Screen(internetDevice: InternetDevice) {
         mutableStateOf(internetDevice.internetAvailability())
     }
 
-    if (result) {
-        var carregandoMoedas by remember {
-            mutableStateOf(true)
-        }
-        var coinsList by remember {
-            mutableStateOf(listOf<CoinModel>())
-        }
-        CoroutineScope(Dispatchers.Default).launch {
-            val coins = CoinsList()
-            coinsList = coins.loadCoins()
-            carregandoMoedas = false
-        }
+    Box(
+        modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
+    ) {
+        if (result) {
+            var carregandoMoedas by remember {
+                mutableStateOf(true)
+            }
+            var coinsList by remember {
+                mutableStateOf(listOf<CoinModel>())
+            }
+            CoroutineScope(Dispatchers.Default).launch {
+                val coins = CoinsList()
+                coinsList = coins.loadCoins()
+                carregandoMoedas = false
+            }
 
-        if (carregandoMoedas) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator(modifier = Modifier.width(70.dp).height(70.dp))
+            if (carregandoMoedas) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.width(70.dp).height(70.dp), color = MaterialTheme.colorScheme.secondary)
+                }
+            } else {
+                App(coinsList)
             }
         } else {
-            App(coinsList)
-        }
-    } else {
-        InternetErrorMessage() {
-            result = internetDevice.internetAvailability()
+            InternetErrorMessage() {
+                result = internetDevice.internetAvailability()
+            }
         }
     }
 }

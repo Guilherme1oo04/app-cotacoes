@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,13 +36,14 @@ fun InternetErrorMessage(internetVerification: () -> Unit) {
     ) {
 
         if (isPressed) {
-            CircularProgressIndicator(modifier = Modifier.width(70.dp).height(70.dp))
+            CircularProgressIndicator(modifier = Modifier.width(70.dp).height(70.dp), color = MaterialTheme.colorScheme.secondary)
         } else {
             Text(
                 text = "Sem conexão com a internet!",
                 modifier = Modifier.padding(16.dp),
                 fontSize = 28.sp,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.secondary
             )
 
             Button(onClick = {
@@ -57,7 +58,7 @@ fun InternetErrorMessage(internetVerification: () -> Unit) {
             ) {
                 Text(
                     text = "Tentar novamente",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontSize = 25.sp
                 )
             }
