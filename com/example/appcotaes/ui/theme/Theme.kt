@@ -11,11 +11,10 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val ColorScheme = darkColorScheme(
-        primary = Blue,
-        onPrimary = onBlue,
-        secondary = LightGreen,
-        tertiary = GiantOrange,
-        background = WhiteBlue,
+        primary = EriesBlack,
+        secondary = White,
+        tertiary = Iris,
+        background = Black,
         error = Red,
 )
 
@@ -30,7 +29,7 @@ private val ColorScheme = darkColorScheme(
     */
 
 @Composable
-fun AppCotaçõesTheme(
+fun AppCotacoesTheme(
         darkTheme: Boolean = isSystemInDarkTheme(),
         content: @Composable () -> Unit
 ) {
