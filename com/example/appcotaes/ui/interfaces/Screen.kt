@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun Screen(internetDevice: InternetDevice) {
+fun Screen(internetDevice: InternetDevice, exitApp: () -> Unit) {
     var result by remember {
         mutableStateOf(internetDevice.internetAvailability())
     }
@@ -58,7 +58,7 @@ fun Screen(internetDevice: InternetDevice) {
                     CircularProgressIndicator(modifier = Modifier.width(70.dp).height(70.dp), color = MaterialTheme.colorScheme.secondary)
                 }
             } else {
-                App(coinsList)
+                App(coinsList, exitApp)
             }
         } else {
             InternetErrorMessage() {

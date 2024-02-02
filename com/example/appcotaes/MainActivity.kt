@@ -13,10 +13,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppCotacoesTheme {
-                Screen(internetDevice = InternetDevice(LocalContext.current))
+                Screen(internetDevice = InternetDevice(LocalContext.current), exitApp = {moveTaskToBack(true)})
             }
         }
-
     }
 }
 

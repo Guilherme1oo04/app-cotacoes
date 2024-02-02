@@ -1,5 +1,6 @@
 package com.example.appcotaes.ui.interfaces
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.example.appcotaes.data.CoinModel
 
 @Composable
-fun App(coinsList: List<CoinModel>) {
+fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
     var moeda1Selecionada by remember {
         mutableStateOf(CoinModel(sigla = "USD", nome = "Dólar Americano"))
     }
@@ -49,6 +50,15 @@ fun App(coinsList: List<CoinModel>) {
     }
     var expandedPopupMoeda2 by remember {
         mutableStateOf(false)
+    }
+
+    BackHandler {
+        if(expandedPopupMoeda1 || expandedPopupMoeda2) {
+            expandedPopupMoeda1 = false
+            expandedPopupMoeda2 = false
+        } else {
+            exitApp()
+        }
     }
 
     Box(
