@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,9 +37,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appcotaes.data.CoinModel
+import com.example.appcotaes.utils.StateCoinViewModel
 
 @Composable
-fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
+fun App(
+    coinsList: List<CoinModel>,
+    exitApp: () -> Unit,
+) {
     var moeda1Selecionada by remember {
         mutableStateOf(CoinModel(sigla = "USD", nome = "Dólar Americano"))
     }
@@ -51,11 +56,28 @@ fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
     var expandedPopupMoeda2 by remember {
         mutableStateOf(false)
     }
+    var pesquisaQuery by remember {
+        mutableStateOf("")
+    }
+
+    val currencyMoedas by remember {
+        mutableStateOf(StateCoinViewModel())
+    }
+    LaunchedEffect(moeda1Selecionada){
+        currencyMoedas.updateInfo(moeda1Selecionada, moeda2Selecionada)
+    }
+    LaunchedEffect(moeda2Selecionada){
+        currencyMoedas.updateInfo(moeda1Selecionada, moeda2Selecionada)
+    }
+    LaunchedEffect(moeda1Selecionada, moeda2Selecionada){
+        currencyMoedas.updateInfo(moeda1Selecionada, moeda2Selecionada)
+    }
 
     BackHandler {
         if(expandedPopupMoeda1 || expandedPopupMoeda2) {
             expandedPopupMoeda1 = false
             expandedPopupMoeda2 = false
+            pesquisaQuery = ""
         } else {
             exitApp()
         }
@@ -105,7 +127,7 @@ fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
                             .clickable {
                                 expandedPopupMoeda1 = !expandedPopupMoeda1
                             }
-                            .width(80.dp)
+                            .width(100.dp)
                             .background(
                                 color = MaterialTheme.colorScheme.background,
                                 shape = RoundedCornerShape(10.dp)
@@ -152,7 +174,7 @@ fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
                             .clickable {
                                 expandedPopupMoeda2 = !expandedPopupMoeda2
                             }
-                            .width(80.dp)
+                            .width(100.dp)
                             .background(
                                 color = MaterialTheme.colorScheme.background,
                                 shape = RoundedCornerShape(10.dp)
@@ -165,6 +187,8 @@ fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
                     )
                 }
             }
+
+            CurrencyInformation(currencyMoedas)
         }
 
         /* Moeda 1 */
@@ -181,6 +205,10 @@ fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
             },
             closeDialog = {
                 expandedPopupMoeda1 = false
+            },
+            pesquisaQuery = pesquisaQuery,
+            pesquisaQueryFunction = {
+                pesquisaQuery = it
             }
         )
 
@@ -198,6 +226,10 @@ fun App(coinsList: List<CoinModel>, exitApp: () -> Unit) {
             },
             closeDialog = {
                 expandedPopupMoeda2 = false
+            },
+            pesquisaQuery = pesquisaQuery,
+            pesquisaQueryFunction = {
+                pesquisaQuery = it
             }
         )
     }
