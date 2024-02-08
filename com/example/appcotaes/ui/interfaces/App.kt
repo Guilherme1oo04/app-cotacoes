@@ -188,7 +188,10 @@ fun App(
                 }
             }
 
-            CurrencyInformation(currencyMoedas)
+            CurrencyInformation(currencyMoedas, moeda1Selecionada.nome, moeda2Selecionada.nome) {
+                moeda1Selecionada = coinsList.find { it.sigla == "USD" }!!
+                moeda2Selecionada = coinsList.find { it.sigla == "BRL" }!!
+            }
         }
 
         /* Moeda 1 */
