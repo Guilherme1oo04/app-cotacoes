@@ -11,13 +11,11 @@ import retrofit2.Response
 class StateCoinViewModel: ViewModel() {
     var currencyInfoCoin: ApiResponseModel? = null
     var combinacaoExiste: Boolean = true
-    var loading: Boolean = true
 
     private val retrofitService: ApiService = InstanceRetrofit().createService()
 
     init {
         loadInfo("USD", "BRL")
-        loading = false
     }
 
     private fun loadInfo(sigla1: String, sigla2: String) {
@@ -28,6 +26,9 @@ class StateCoinViewModel: ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     currencyInfoCoin = response.body()?.get(0)
+                    combinacaoExiste = true
+                } else {
+                    combinacaoExiste = false
                 }
             }
 
@@ -38,8 +39,7 @@ class StateCoinViewModel: ViewModel() {
     }
 
     fun updateInfo(moeda1: CoinModel, moeda2: CoinModel) {
-        loading = true
+        currencyInfoCoin = null
         loadInfo(moeda1.sigla, moeda2.sigla)
-        loading = false
     }
 }
