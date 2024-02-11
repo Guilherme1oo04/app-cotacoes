@@ -105,7 +105,7 @@ fun App(
                     textAlign = TextAlign.Center,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.secondary,
                     style = TextStyle(
                         shadow = Shadow(
                             color = Color.Black,

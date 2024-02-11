@@ -25,6 +25,6 @@ data class ApiResponseModel(
     val ask: String,
     @SerializedName("timestamp")
     val timestamp: String,
-    @SerializedName("create_data")
-    val create_data: String
+    @SerializedName("create_date")
+    val create_date: String
 )
