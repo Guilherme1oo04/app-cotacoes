@@ -20,6 +20,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appcotaes.utils.StateCoinViewModel
 import java.math.BigDecimal
+import java.math.MathContext
 import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -159,10 +161,13 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
                         var valorMoeda2 by remember {
                             mutableStateOf(precoArredondado.toString())
                         }
-                        Column {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             val focusManager = LocalFocusManager.current
                             Text(
-                                text = nomeMoeda1
+                                text = nomeMoeda1,
+                                modifier = Modifier.padding(bottom = 4.dp)
                             )
                             OutlinedTextField(
                                 value = TextFieldValue(
@@ -176,10 +181,21 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
                                         if(newValue.text.matches(Regex("^[+]?(\\d+\\.?\\d*|\\.\\d+)\$"))) {
                                             if(newValue.text.matches(Regex("^0[1-9]\\d*\$"))){
                                                 valorMoeda1 = newValue.text.trimStart { it == '0' }
+                                            } else if(newValue.text.matches(Regex("^00\\d*\$"))) {
+                                                valorMoeda1 = "0"
                                             } else {
                                                 valorMoeda1 = newValue.text
                                             }
                                         }
+                                    }
+
+                                    if (valorMoeda1 == "0") {
+                                        valorMoeda2 = "0"
+                                    } else {
+                                        valorMoeda2 = BigDecimal(currencyInfoCoin.bid).multiply(
+                                            BigDecimal(valorMoeda1), MathContext
+                                        (4)
+                                        ).toString()
                                     }
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -190,14 +206,21 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
                                 keyboardActions = KeyboardActions(
                                     onAny = {focusManager.clearFocus()}
                                 ),
-                                modifier = Modifier
-                                    .width(120.dp)
+                                modifier = Modifier.width(130.dp),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                                )
                             )
 
                         }
-                        Column {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            val focusManager = LocalFocusManager.current
                             Text(
-                                text = nomeMoeda2
+                                text = nomeMoeda2,
+                                modifier = Modifier.padding(bottom = 4.dp)
                             )
                             OutlinedTextField(
                                 value = TextFieldValue(
@@ -211,10 +234,19 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
                                         if(newValue.text.matches(Regex("^[+]?(\\d+\\.?\\d*|\\.\\d+)\$"))) {
                                             if(newValue.text.matches(Regex("^0[1-9]\\d*\$"))){
                                                 valorMoeda2 = newValue.text.trimStart { it == '0' }
+                                            } else if(newValue.text.matches(Regex("^00\\d*\$"))) {
+                                                valorMoeda2 = "0"
                                             } else {
                                                 valorMoeda2 = newValue.text
                                             }
                                         }
+                                    }
+
+                                    if(valorMoeda2 == "0") {
+                                        valorMoeda1 = "0"
+                                    } else {
+                                        val proporcao = BigDecimal("1").divide(BigDecimal(currencyInfoCoin.bid), MathContext(10))
+                                        valorMoeda1 = BigDecimal(valorMoeda2).multiply(proporcao, MathContext(4)).toString()
                                     }
                                 },
                                 keyboardOptions = KeyboardOptions(
@@ -222,7 +254,14 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
                                     imeAction = ImeAction.Done
                                 ),
                                 singleLine = true,
-                                modifier = Modifier.width(120.dp)
+                                keyboardActions = KeyboardActions(
+                                    onAny = {focusManager.clearFocus()}
+                                ),
+                                modifier = Modifier.width(130.dp),
+                                colors = TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                                )
                             )
                         }
                     }
