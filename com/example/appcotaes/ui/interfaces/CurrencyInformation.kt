@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalFocusManager
@@ -133,7 +134,7 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
             CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.secondary) {
                 Column(
                     modifier = Modifier
-                        .padding(top = 15.dp)
+                        .padding(top = 15.dp, bottom = 20.dp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -268,6 +269,8 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
                 }
             }
 
+            Divider(modifier = Modifier.padding(top = 10.dp))
+
             Column(
                 modifier = Modifier
                     .padding(top = 15.dp)
@@ -277,14 +280,148 @@ fun CurrencyInformation(currencyMoedas: StateCoinViewModel, nomeMoeda1: String, 
                 val date = formatDate("yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy - HH:mm:ss", currencyInfoCoin.create_date)
                 Text(
                     text = "Dados do câmbio",
-                    color = MaterialTheme.colorScheme.secondary,
-                    fontSize = 25.sp
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontSize = 25.sp,
+                    style = TextStyle(
+                        shadow = Shadow(
+                            color = MaterialTheme.colorScheme.primary,
+                            offset = Offset(2f, 2f),
+                            blurRadius = 0f
+                        )
+                    ),
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "Última atualização $date",
                     color = MaterialTheme.colorScheme.secondary,
                     fontSize = 12.sp
                 )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    OutlinedTextField(
+                        value = currencyInfoCoin.bid,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = {
+                            Text(
+                                text = "Preço de venda",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
+                        },
+                        modifier = Modifier
+                            .focusProperties { canFocus = false }
+                            .width(140.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                        )
+                    )
+                    OutlinedTextField(
+                        value = currencyInfoCoin.ask,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = {
+                            Text(
+                                text = "Preço de compra",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
+                        },
+                        modifier = Modifier
+                            .focusProperties { canFocus = false }
+                            .width(140.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                        )
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    OutlinedTextField(
+                        value = currencyInfoCoin.high,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = {
+                            Text(
+                                text = "Valor mais alto",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
+                        },
+                        modifier = Modifier
+                            .focusProperties { canFocus = false }
+                            .width(140.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                        )
+                    )
+                    OutlinedTextField(
+                        value = currencyInfoCoin.low,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = {
+                            Text(
+                                text = "Valor mais baixo",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
+                        },
+                        modifier = Modifier
+                            .focusProperties { canFocus = false }
+                            .width(140.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                        )
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    OutlinedTextField(
+                        value = currencyInfoCoin.varBid,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = {
+                            Text(
+                                text = "Variação de preço",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
+                        },
+                        modifier = Modifier
+                            .focusProperties { canFocus = false }
+                            .width(140.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                        )
+                    )
+                    OutlinedTextField(
+                        value = "${currencyInfoCoin.pctChange}%",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = {
+                            Text(
+                                text = "% de mudança",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
+                        },
+                        modifier = Modifier
+                            .focusProperties { canFocus = false }
+                            .width(140.dp),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.tertiary
+                        )
+                    )
+                }
             }
         }
 
